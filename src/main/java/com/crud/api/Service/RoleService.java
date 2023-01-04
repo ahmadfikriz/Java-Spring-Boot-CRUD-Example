@@ -13,19 +13,19 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
-    }
-
     public Role create(Role role) {
         return roleRepository.save(role);
+    }
+
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 
     public Role update(Role role) {
         return roleRepository.save(role);
     }
 
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         roleRepository.deleteById(id);
     }
 
