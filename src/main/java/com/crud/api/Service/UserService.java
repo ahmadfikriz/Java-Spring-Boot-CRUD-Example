@@ -8,6 +8,7 @@ import com.crud.api.Entity.User;
 import com.crud.api.Repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,7 +30,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User getUserByName(String username) {
+    public Optional<User> getUserByName(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -44,5 +45,10 @@ public class UserService {
     public String delete(Long id) {
         userRepository.deleteById(id);
         return "user removed !! " + id;
+    }
+
+    public boolean verifyPassword(User user, String password) {
+        String hashedPassword = user.getPassword();
+        return hashedPassword.equals(DigestUtils.sha256Hex(password));
     }
 }

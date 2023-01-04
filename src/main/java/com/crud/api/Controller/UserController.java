@@ -7,6 +7,7 @@ import com.crud.api.Entity.User;
 import com.crud.api.Service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -17,6 +18,24 @@ public class UserController {
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.create(user);
+    }
+    
+    @PostMapping("/login")
+    public boolean login(@RequestBody User user) {
+    String username = user.getUsername();
+    String password = user.getPassword();
+    Optional<User> optionalUser = userService.getUserByName(username);
+    if (optionalUser.isPresent()) {
+        User userInDatabase = optionalUser.get();
+        if (userService.verifyPassword(userInDatabase, password)) {
+            // simpan informasi login ke sesi atau cookie
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
     }
 
     @GetMapping("/users")
@@ -30,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/username/{name}")
-    public User findUserByName(@PathVariable String username) {
+    public Optional<User> findUserByName(@PathVariable String username) {
         return userService.getUserByName(username);
     }
 
