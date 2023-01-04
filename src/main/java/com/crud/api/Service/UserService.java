@@ -2,6 +2,7 @@ package com.crud.api.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import com.crud.api.Entity.User;
 import com.crud.api.Repository.UserRepository;
@@ -14,6 +15,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public User create(User user) {
+        String password = user.getPassword();
+        String hashedPassword = DigestUtils.sha256Hex(password);
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
