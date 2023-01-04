@@ -11,16 +11,15 @@ import java.util.Optional;
 
 @RestController
 public class UserController {
-
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    @PostMapping("register")
+    public User create(@RequestBody User user) {
         return userService.create(user);
     }
     
-    @PostMapping("/login")
+    @PostMapping("login")
     public boolean login(@RequestBody User user) {
     String username = user.getUsername();
     String password = user.getPassword();
@@ -38,27 +37,27 @@ public class UserController {
     }
     }
 
-    @GetMapping("/users")
+    @GetMapping("users")
     public List<User> findAll() {
         return userService.getUsers();
     }
 
-    @GetMapping("/userid/{id}")
+    @GetMapping("userid/{id}")
     public User findUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/username/{name}")
+    @GetMapping("username/{name}")
     public Optional<User> findUserByName(@PathVariable String username) {
         return userService.getUserByName(username);
     }
 
-    @PutMapping("/update")
+    @PutMapping("update")
     public User update(@RequestBody User user) {
         return userService.update(user);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("delete/{id}")
     public String delete(@PathVariable Long id) {
         return userService.delete(id);
     }

@@ -25,6 +25,10 @@ public class User {
   @Column(nullable = false)
   private String password;
 
+  @ManyToOne
+  @JoinColumn(name = "role_id")
+  private Role role;
+
 public Long getId() {
     return id;
 }
@@ -55,5 +59,12 @@ public String getPassword() {
 
 public void setPassword(String password) {
     this.password = password;
+}
+
+public Role getRole() {
+    return role;
+}
+
+public void setRole(Role findByName) {
 }
 }

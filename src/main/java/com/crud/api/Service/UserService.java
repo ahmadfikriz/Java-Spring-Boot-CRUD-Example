@@ -14,11 +14,17 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleService roleService;
 
     public User create(User user) {
+        user.setUsername(user.getUsername());
+        user.setEmail(user.getEmail());
         String password = user.getPassword();
         String hashedPassword = DigestUtils.sha256Hex(password);
         user.setPassword(hashedPassword);
+        // user.setRole(roleService.findByName(user.getRole().getName()));
+
         return userRepository.save(user);
     }
 
