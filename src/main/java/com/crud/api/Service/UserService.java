@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.crud.api.Entity.Role;
 import com.crud.api.Entity.User;
 import com.crud.api.Repository.UserRepository;
 
@@ -18,12 +19,11 @@ public class UserService {
     private RoleService roleService;
 
     public User create(User user) {
+        Role role = roleService.findByName(user.getRole().getName());
         user.setUsername(user.getUsername());
         user.setEmail(user.getEmail());
-        String password = user.getPassword();
-        String hashedPassword = DigestUtils.sha256Hex(password);
-        user.setPassword(hashedPassword);
-        // user.setRole(roleService.findByName(user.getRole().getName()));
+        user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
+        user.setRole(role);
 
         return userRepository.save(user);
     }
