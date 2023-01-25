@@ -23,7 +23,7 @@ public class UserController {
     public boolean login(@RequestBody User user) {
     String username = user.getUsername();
     String password = user.getPassword();
-    Optional<User> optionalUser = userService.getUserByName(username);
+    Optional<User> optionalUser = userService.findByUsername(username);
     if (optionalUser.isPresent()) {
         User userInDatabase = optionalUser.get();
         if (userService.verifyPassword(userInDatabase, password)) {
@@ -39,25 +39,26 @@ public class UserController {
 
     @GetMapping("users")
     public List<User> findAll() {
-        return userService.getUsers();
+        return userService.findAll();
     }
 
     @GetMapping("userid/{id}")
-    public User findUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public User findById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
-    @GetMapping("username/{name}")
-    public Optional<User> findUserByName(@PathVariable String username) {
-        return userService.getUserByName(username);
+    @GetMapping("username/{username}")
+    public Optional<User> findByUsername(@PathVariable String username) {
+        return userService.findByUsername(username);
     }
 
-    @PutMapping("update")
-    public User update(@RequestBody User user) {
+    @PutMapping("user/update/{id}")
+    public User update(@PathVariable Long id, @RequestBody User user) {
+        user.setId(id);
         return userService.update(user);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("user/delete/{id}")
     public String delete(@PathVariable Long id) {
         return userService.delete(id);
     }

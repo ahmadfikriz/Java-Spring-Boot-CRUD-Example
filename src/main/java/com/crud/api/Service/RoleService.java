@@ -21,12 +21,17 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    public Role findById(Long id) {
+        return roleRepository.findById(id).orElse(null);
+    }
+
     public Role update(Role role) {
         return roleRepository.save(role);
     }
 
-    public void delete(Long id) {
+    public String delete(Long id) {
         roleRepository.deleteById(id);
+        return "Role ID " + id + " has been removed";
     }
 
     // public Role findByName(String name) {

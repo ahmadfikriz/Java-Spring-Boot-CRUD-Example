@@ -28,15 +28,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> getUsers() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public Optional<User> getUserByName(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -50,7 +50,7 @@ public class UserService {
 
     public String delete(Long id) {
         userRepository.deleteById(id);
-        return "user removed !! " + id;
+        return "User ID " + id + " has been removed";
     }
 
     public boolean verifyPassword(User user, String password) {

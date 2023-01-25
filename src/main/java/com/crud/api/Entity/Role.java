@@ -18,7 +18,7 @@ public class Role {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL)
   private List<User> user;
 
 public Long getId() {
